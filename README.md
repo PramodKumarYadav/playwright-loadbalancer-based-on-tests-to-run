@@ -212,16 +212,16 @@ jobs:
 
 ## Boundray value Tests 
 
-### Test result when no test files are touched
+### Test result when there are no tests to run
 ![zero-tests-to-run](docs/0-zero-tests-to-run.png)
 
-### Test result when one-third files are touched
+### Test result when there are very few tests to run
 ![seven-percent-tests-to-run](docs/1-seven-percent-tests-to-run.png)
 
-### Test result when two -third files are touched
+### Test result when fifty percent tests to run
 ![fifty-percent-tests-to-run](docs/2-fifty-percent-tests-to-run.png)
 
-### Test result when all files are touched
+### Test result when all tests to run
 ![all-tests-are-run](docs/3-all-tests-are-run.png)
 
 ## Reference
