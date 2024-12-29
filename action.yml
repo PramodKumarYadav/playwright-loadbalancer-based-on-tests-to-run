@@ -1,4 +1,4 @@
-name: 'Playwright dynamic matrix based on the number of tests to run'
+name: 'Playwright load balancer based on tests to run'
 author: 'Pramod Yadav'
 description: 'To get dynamic playwright matrix based on the number of tests to run in a workflow run'
 # https://docs.github.com/en/actions/sharing-automations/creating-actions/metadata-syntax-for-github-actions#branding

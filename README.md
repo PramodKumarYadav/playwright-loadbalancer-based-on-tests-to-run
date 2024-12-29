@@ -1,23 +1,24 @@
 # playwright-shard-matrix-based-on-tests-to-run
+
 A GitHub action to provide a dynamic matrix based on the amount of test cases to run in a workflow
 
 ## Why this action?
 
-Playwright provides an option to run tests on multiple runners using its sharding option as shown [here](https://playwright.dev/docs/test-sharding#github-actions-example). Sharding is a great way to create multiple runners to bring down total execution time. For instance, when a branch is merged to the main branch, post deployment of dev environment, you may want to run all your tests on newly deployed dev environment to see everyhing works as expected. 
+Playwright provides an option to run tests on multiple runners using its sharding option as shown [here](https://playwright.dev/docs/test-sharding#github-actions-example). Sharding is a great way to create multiple runners to bring down total execution time. For instance, when a branch is merged to the main branch, post deployment of dev environment, you may want to run all your tests on newly deployed dev environment to see everyhing works as expected.
 
-However, there are also instances when you just want to run a subset of tests, say at a CRON job every hour or so to check if the test environments are up and running. OR we may want to run frontend tests for a particular app if the backend service for that app is newly deployed. 
+However, there are also instances when you just want to run a subset of tests, say at a CRON job every hour or so to check if the test environments are up and running. OR we may want to run frontend tests for a particular app if the backend service for that app is newly deployed.
 
-In all these cases, we want to run a very small amount of tests compared to what the max number of runners are optimised for. 
+In all these cases, we want to run a very small amount of tests compared to what the max number of runners are optimised for.
 
-To take this with an example, imagine you have 600 tests and you use 6 github runners to run all these tests on a sharded manner. You have hardcoded this matrix as `shardIndex: [1, 2, 3, 4, 5, 6]`, as shown in the example from Playwright above. 
+To take this with an example, imagine you have 600 tests and you use 6 github runners to run all these tests on a sharded manner. You have hardcoded this matrix as `shardIndex: [1, 2, 3, 4, 5, 6]`, as shown in the example from Playwright above.
 
-Now for one of the above use cases, imagine the CRON job now needs to run only 5 or 6 tests that are tagged as @smoke-test or @health-check. If you use a reusable workflow, you may still be creating 6 runners to run just these 5 or 6 tests even though just one runner would be enough. If this happens frequently, it would result in wasted billable GitHub runner minutes over a period of time for no value in return. 
+Now for one of the above use cases, imagine the CRON job now needs to run only 5 or 6 tests that are tagged as @smoke-test or @health-check. If you use a reusable workflow, you may still be creating 6 runners to run just these 5 or 6 tests even though just one runner would be enough. If this happens frequently, it would result in wasted billable GitHub runner minutes over a period of time for no value in return.
 
-Wouldn't it be nice if based on the ratio of tests to run to the total tests, we could generate a dynamic GitHub matrix on run time? This is exactly the problem this action was created to solve. 
+Wouldn't it be nice if based on the ratio of tests to run to the total tests, we could generate a dynamic GitHub matrix on run time? This is exactly the problem this action was created to solve.
 
 > [!NOTE]
 >
-> If you want to optimise runners for the use case of changed test files in a pull request, you may want to refer this other action that I created.  
+> If you want to optimise runners for the use case of changed test files in a pull request, you may want to refer this other action that I created.
 
 ## Inputs
 
@@ -52,7 +53,7 @@ outputs:
 
 ## Example usage
 
-Below is working and tested example of a workflow that uses this action. 
+Below is working and tested example of a workflow that uses this action.
 
 ```yaml {"id":"01J2NSXS32KV8TSMM4W64D9WMT"}
 # Simple workflow for deploying static content to GitHub Pages
@@ -97,7 +98,7 @@ jobs:
       dynamic_matrix: ${{ steps.get-dynamic-matrix.outputs.dynamic-matrix }}
     steps:
       - name: Get dynamic matrix
-        uses: PramodKumarYadav/playwright-shard-matrix-based-on-tests-to-run@main
+        uses: PramodKumarYadav/playwright-loadbalancer-based-on-tests-to-run@main
         id: get-dynamic-matrix
         with:
           max-runners: 6
@@ -210,18 +211,22 @@ jobs:
 
 ```
 
-## Boundray value Tests 
+## Boundray value Tests
 
 ### Test result when there are no tests to run
+
 ![zero-tests-to-run](docs/0-zero-tests-to-run.png)
 
 ### Test result when there are very few tests to run
+
 ![seven-percent-tests-to-run](docs/1-seven-percent-tests-to-run.png)
 
 ### Test result when fifty percent tests to run
+
 ![fifty-percent-tests-to-run](docs/2-fifty-percent-tests-to-run.png)
 
 ### Test result when all tests to run
+
 ![all-tests-are-run](docs/3-all-tests-are-run.png)
 
 ## Reference
